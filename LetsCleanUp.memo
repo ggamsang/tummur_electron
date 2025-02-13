@@ -1,0 +1,42 @@
+LetsCleanUp.
+정리하여보자.
+이런저러 아이디어가 떠오르지만
+1. 현재 진행된 것에서 완료를 우선하는 것으로 해보도록 하자.
+  1.1. 동작시켜보고 안되는 것들 우선 
+  단축키누르면 입력창 뜸
+  저장누르면 저장이 안됨.
+  http://localhost:8877/tasks 의 결과는 아무것도 없음.
+  VM4 sandbox_bundle:2 Unable to load preload script: /Users/ggmsng/Documents/Poof/preload.js
+VM4 sandbox_bundle:2 Error: module not found: axios
+    at preloadRequire (VM4 sandbox_bundle:2:151339)
+    at <anonymous>:3:15
+    at runPreloadScript (VM4 sandbox_bundle:2:152003)
+    at VM4 sandbox_bundle:2:152300
+    at VM4 sandbox_bundle:2:152455
+    at ___electron_webpack_init__ (VM4 sandbox_bundle:2:152459)
+    at VM4 sandbox_bundle:2:152582
+index.html:33 Uncaught TypeError: Cannot read properties of undefined (reading 'getTasks')
+    at loadTasks (index.html:33:32)
+    at index.html:44:9
+VM4 sandbox_bundle:2 Electron Security Warning (Insecure Content-Security-Policy) This renderer process has either no Content Security
+  Policy set or a policy with "unsafe-eval" enabled. This exposes users of
+  this app to unnecessary security risks.
+
+For more information and help, consult
+https://electronjs.org/docs/tutorial/security.
+This warning will not show up
+once the app is packaged.
+index.html:25 undefined
+index.html:26 Uncaught TypeError: Cannot read properties of undefined (reading 'saveTask')
+    at saveTask (index.html:26:32)
+    at HTMLButtonElement.onclick (index.html:16:34)
+﻿
+sandbox 문제였음. 확인해볼것. 우선 해결은해서 결과는 잘 나옴.
+
+
+npm install -g pm2
+
+pm2 start npm --name poof-app -- start
+pm2 save
+pm2 startup
+sudo env PATH=$PATH:/Users/ggmsng/.nvm/versions/node/v22.13.1/bin /Users/ggmsng/.nvm/versions/node/v22.13.1/lib/node_modules/pm2/bin/pm2 startup launchd -u ggmsng --hp /Users/ggmsng

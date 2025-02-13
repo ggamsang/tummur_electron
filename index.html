@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poof! 💨</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input { width: 80%; padding: 10px; margin-bottom: 10px; }
+        button { padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h1>Poof! 💨</h1>
+    <input type="text" id="taskInput" placeholder="할 일 입력..." />
+    <button onclick="saveTask()">저장</button>
+    <ul id="taskList"></ul>
+
+    <script>
+        function saveTask() {
+            let task = document.getElementById("taskInput").value;
+            if (!task.trim()) return;
+          
+            alert(task);
+            console.log(window.electronAPI)
+            window.electronAPI.saveTask(task).then(() => {
+                document.getElementById("taskInput").value = "";
+                loadTasks();
+            });
+        }
+
+        function loadTasks() {
+            window.electronAPI.getTasks().then(response => {
+                let list = document.getElementById("taskList");
+                list.innerHTML = "";
+                response.data.forEach(task => {
+                    let li = document.createElement("li");
+                    li.textContent = task.task;
+                    list.appendChild(li);
+                });
+            });
+        }
+
+        loadTasks();
+    </script>
+</body>
+</html>
