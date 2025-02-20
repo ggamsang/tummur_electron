@@ -40,3 +40,17 @@ pm2 start npm --name poof-app -- start
 pm2 save
 pm2 startup
 sudo env PATH=$PATH:/Users/ggmsng/.nvm/versions/node/v22.13.1/bin /Users/ggmsng/.nvm/versions/node/v22.13.1/lib/node_modules/pm2/bin/pm2 startup launchd -u ggmsng --hp /Users/ggmsng
+
+
+8.
+7.
+6.
+5.
+4.
+3. 
+2.
+1.
+0. 
+
+
+
