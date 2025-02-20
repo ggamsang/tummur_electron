@@ -29,53 +29,35 @@ function formatDate(dateString) {
 
 function loadTasks() {
   window.electronAPI.getTasks().then((response) => {
-    let list = document.getElementById("taskList");
-    list.innerHTML = "";
-    response.data.forEach((task) => {
-      let li = document.createElement("li");
-      let content = document.createElement("div");
-      let date = document.createElement("div");
-      li.style.position = "relative";
-      content.textContent = task.task;
-      date.textContent = formatDate(task.created_at);
-      date.classList.add("created_at");
-      li.dataset.id = task.id;
-      li.appendChild(content);
-      li.appendChild(date);
-      list.appendChild(li);
-    });
+    const list = document.getElementById("taskList");
+    list.innerHTML = response.data.map(task => `
+      <li data-id="${task.id}" style="position: relative;">
+        <div>${task.task}</div>
+        <div class="created_at">${formatDate(task.created_at)}</div>
+      </li>
+    `).join('');
   });
 }
 
 function activedeleteMode() {
   settings.deleteMode = !settings.deleteMode;
-  document.getElementById("debug").textContent = settings.deleteMode
-    ? "deleteMode: true"
-    : "deleteMode: false";
-  const list = document.getElementById("taskList").querySelectorAll("li");
+  document.getElementById("debug").textContent = `deleteMode: ${settings.deleteMode}`;
 
-  list.forEach((li) => {
+  document.querySelectorAll("#taskList li").forEach(li => {
     let deleteButton = li.querySelector(".delete-button");
 
     if (settings.deleteMode) {
       if (!deleteButton) {
-        // ✅ 기존 버튼이 없을 때만 추가
-        deleteButton = document.createElement("button");
-        deleteButton.classList.add("delete-button");
-        deleteButton.textContent = "x";
-        deleteButton.addEventListener("click", () => {
-          deleteTask(li.dataset.id);
-        });
-        li.appendChild(deleteButton);
+        li.insertAdjacentHTML("beforeend", 
+          `<button class="delete-button" onclick="deleteTask('${li.dataset.id}')">x</button>`
+        );
       }
     } else {
-      if (deleteButton) {
-        // ✅ 버튼이 있을 때만 삭제
-        li.removeChild(deleteButton);
-      }
+      deleteButton?.remove(); // ✅ 버튼이 있으면 제거
     }
   });
 }
+
 
 const deleteModeButton = document.getElementById("deleteModeButton");
 deleteModeButton.addEventListener("click", () => {
@@ -126,38 +108,33 @@ const settings = {
   deleteMode: false,
 };
 
+const updateThemeButton = () => {
+  document.getElementById("settingButton").innerHTML =
+    document.body.classList.contains("dark-mode") ? "🌙" : "🌞";
+};
+
 const toggleTheme = () => {
   const isDarkMode = document.body.classList.toggle("dark-mode");
   localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-  document.getElementById("settingButton").innerHTML = isDarkMode
-    ? "🌙"
-    : "🌞";
+  updateThemeButton();
 };
 
 const applyTheme = () => {
   const savedTheme = localStorage.getItem("theme") || "light";
   document.body.classList.toggle("dark-mode", savedTheme === "dark");
-  document.getElementById("settingButton").innerHTML = savedTheme === "dark"
-    ? "🌙"
-    : "🌞";
+  updateThemeButton();
 };
-document.getElementById("settingButton").addEventListener("click", toggleTheme);
+
 applyTheme();
 
+document.getElementById("settingButton").addEventListener("click", toggleTheme);
+
 document.addEventListener("keydown", (event) => {
-  // ✅ 'x' 키가 눌렸는지 확인
-  if (event.key.toLowerCase() === "x") {
+  const key = event.key.toLowerCase(); // ✅ 변수화
+
+  if (key === "x") {
     const activeElement = document.activeElement;
-
-    // ✅ 사용자가 입력 필드(`input`, `textarea`)에서 입력 중이면 단축키 무시
-    if (
-      activeElement.tagName === "INPUT" ||
-      activeElement.tagName === "TEXTAREA"
-    ) {
-      return;
-    }
-
-    // ✅ 입력창이 아닐 때만 삭제 모드 토글
+    if (["INPUT", "TEXTAREA"].includes(activeElement.tagName)) return;
     activedeleteMode();
   }
 });

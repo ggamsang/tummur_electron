@@ -8,7 +8,7 @@ const port = 8877;
 app.use(express.json());
 app.use(cors());
 // SQLite 데이터베이스 연결
-const db = new sqlite3.Database("./poof.db", (err) => {
+const db = new sqlite3.Database("../poof.db", (err) => {
   if (err) {
     console.error("DB Error:", err);
   } else {

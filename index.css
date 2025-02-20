@@ -18,8 +18,19 @@
   --button-hover-dark: #666;
   --delete-button-bg-dark: darkred;
   --delete-button-text-dark: white;
-}
 
+
+}
+/* 웹 브라우저 기본 스크롤바 숨기기 */
+html, body {
+  overflow: auto;  /* 스크롤 가능 */
+  -ms-overflow-style: none;  /* IE, Edge에서 스크롤바 숨김 */
+  scrollbar-width: none;  /* Firefox에서 스크롤바 숨김 */
+}
+/* 크롬, 사파리에서 스크롤바 숨기기 */
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
 /* 🌞 기본(라이트 모드) */
 body {
   position: relative;
@@ -152,9 +163,9 @@ body.dark-mode .delete-button {
 
 /* 📌 삭제 모드 버튼 */
 .deleteModeButton {
-  position: absolute;
-  right: 5px;
-  top: 5px;
+  /* position: absolute; */
+  /* right: 5px; */
+  /* top: 5px; */
   background-color: #fbdfd8;
   border: none;
   border-radius: 8px;
@@ -182,4 +193,13 @@ body.dark-mode .delete-button {
   left: 10px;
   font-size: 10px;
   color: #666;
+}
+ 
+.header-right {
+  min-width: 150px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  gap: 10px;
 }
