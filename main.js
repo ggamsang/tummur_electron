@@ -8,10 +8,6 @@ let statsWindow = null;
 // 백엔드 서버 실행 상태 확인 변수 추가
 let isBackendRunning = false;
 
-// require("electron-reload")(__dirname, {
-//   electron: require(`${__dirname}/node_modules/electron`),
-// });
-
 // 백엔드 서버 실행 함수
 function startBackendServer() {
   // 이미 실행 중이면 리턴
@@ -63,6 +59,7 @@ app.whenReady().then(() => {
 
   // 단축키 등록 시도
   try {
+
     globalShortcut.register("F14", () => {
       if (!statsWindow) {
         statsWindow = createWindowStats(); // 오타 수정
