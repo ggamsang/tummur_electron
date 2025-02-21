@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Poof! 💨</title>
+    <title>Poof💨</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="murmur/murmur.css" />
   </head>
   <body>
     <div class="header">
@@ -20,14 +21,14 @@
       </div>
     </div>
     <div class="debug" id="debug"></div>
-    <h1>Poof!💨</h1>
+    <h1>Poof💨</h1>
     <textarea
       type="text"
-      id="taskInput"
+      id="murmurInput"
       placeholder="내용을 입력하세요"
     ></textarea>
-    <button onclick="saveTask()">저장</button>
-    <ul class="taskList" id="taskList"></ul>
-    <script type="text/javascript" src="task.js"></script>
+    <button onclick="saveMurmur()">저장</button>
+    <ul class="murmurList" id="murmurList"></ul>
+    <script type="module" src="murmur/murmur.js"></script>
   </body>
 </html>

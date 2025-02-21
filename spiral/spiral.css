@@ -1,0 +1,53 @@
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-y: hidden;
+}
+svg {
+  display: block;
+}
+#todoModal {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+}
+input, button {
+  display: block;
+  margin: 10px 0;
+}
+button {
+  background: #0f0;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+button:hover {
+  background: #0c0;
+}
+.todo-item {
+  list-style: none;
+  padding: 10px;
+  margin: 5px 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.todo-item:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.5);
+}

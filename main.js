@@ -3,12 +3,9 @@ const path = require("path");
 const { spawn } = require("child_process");
 
 let mainWindow = null;
-let statsWindow = null;
-
-// 백엔드 서버 실행 상태 확인 변수 추가
+let todosWindow = null;
 let isBackendRunning = false;
 
-// 백엔드 서버 실행 함수
 function startBackendServer() {
   // 이미 실행 중이면 리턴
   if (isBackendRunning) {
@@ -50,7 +47,6 @@ function startBackendServer() {
   }
 }
 
-// 앱 시작 시 백엔드 서버 실행
 startBackendServer();
 
 app.whenReady().then(() => {
@@ -59,23 +55,22 @@ app.whenReady().then(() => {
 
   // 단축키 등록 시도
   try {
-
     globalShortcut.register("F14", () => {
-      if (!statsWindow) {
-        statsWindow = createWindowStats(); // 오타 수정
+      if (!todosWindow) {
+        todosWindow = createWindowTodos(); // 오타 수정
       }
-      if (statsWindow.isVisible()) {
-        statsWindow.hide();
+      if (todosWindow.isVisible()) {
+        todosWindow.hide();
         pressAltTab();
       } else {
-        statsWindow.show();
-        statsWindow.focus();
+        todosWindow.show();
+        todosWindow.focus();
       }
     });
 
     globalShortcut.register("F13", () => {
       if (!mainWindow) {
-        createWindow();
+        createWindowMurmurs();
       }
       if (mainWindow.isVisible()) {
         mainWindow.hide();
@@ -102,46 +97,50 @@ function pressAltTab() {
   );
 }
 
-function createWindowStats() {
-  // 함수명 오타 수정
+function createWindowTodos() {
   try {
-    statsWindow = new BrowserWindow({
+    todosWindow = new BrowserWindow({
       width: 800,
       height: 600,
-      alwaysOnTop: true,
+      // alwaysOnTop: true,
       webPreferences: {
+        preload: path.join(__dirname, "preload.js"),
         contextIsolation: true,
         sandbox: false,
       },
+      title: "Spiral",
+      frame: false,
     });
-    statsWindow.loadFile("stats.html");
+    todosWindow.loadFile(path.join(__dirname, "spiral.html"));
 
-    statsWindow.on("closed", () => {
-      statsWindow = null;
+    todosWindow.on("closed", () => {
+      todosWindow = null;
       pressAltTab();
     });
 
-    return statsWindow;
+    return todosWindow;
   } catch (error) {
     console.error("통계 창 생성 중 오류:", error);
     return null;
   }
 }
 
-function createWindow() {
+function createWindowMurmurs() {
   try {
     mainWindow = new BrowserWindow({
       width: 800,
       height: 600,
-      alwaysOnTop: true,
+      // alwaysOnTop: true,
       webPreferences: {
         preload: path.join(__dirname, "preload.js"),
         contextIsolation: true,
         sandbox: false,
       },
+      frame: false,
+      title: "Murmurs",
     });
 
-    mainWindow.loadFile("index.html");
+    mainWindow.loadFile(path.join(__dirname, "index.html"));
 
     mainWindow.on("closed", () => {
       mainWindow = null;
@@ -173,7 +172,6 @@ function createWindow() {
   }
 }
 
-// 모든 창이 닫혀도 앱 종료 방지
 app.on("window-all-closed", (e) => {
   e.preventDefault();
 });
@@ -187,7 +185,6 @@ function stopBackendServer() {
   }
 }
 
-// 앱 종료 시 정리
 app.on("will-quit", () => {
   try {
     globalShortcut.unregisterAll();
@@ -198,7 +195,6 @@ app.on("will-quit", () => {
   }
 });
 
-// 창 숨김 이벤트 처리
 ipcMain.on("hide-window", () => {
   if (mainWindow && mainWindow.isVisible()) {
     mainWindow.hide();
@@ -214,7 +210,6 @@ ipcMain.on("hide-window", () => {
   }
 });
 
-// 예기치 않은 종료 처리
 process.on("uncaughtException", (err) => {
   console.error("예기치 않은 오류 발생:", err);
   // 필요한 정리 작업 수행

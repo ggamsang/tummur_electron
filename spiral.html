@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>오늘의 진행도</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="spiral/spiral.css" />
+  </head>
+  <body>
+    <svg id="spiralSvg" width="600" height="600" viewBox="0 0 600 600"></svg>
+    <span id="spiralText"></span>
+    <div id="todoModal">
+      <input type="text" id="todoInput" placeholder="할 일을 입력하세요" />
+      <button id="addTodoBtn">추가</button>
+      <ul id="todoList"></ul>
+    </div>
+    <script type="module" src="spiral/spiral.js"></script>
+</body>
+</html>
