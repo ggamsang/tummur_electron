@@ -8,7 +8,7 @@ const port = 8877;
 app.use(express.json());
 app.use(cors());
 // SQLite 데이터베이스 연결
-const db = new sqlite3.Database("../poof.db", (err) => {
+const db = new sqlite3.Database("../murmur.db", (err) => {
   if (err) {
     console.error("DB Error:", err);
   } else {
@@ -69,7 +69,7 @@ app.delete("/api/murmur/:id", (req, res) => {
 });
 // 서버 실행
 app.listen(port, () => {
-  console.log(`✅ Poof 백엔드 서버 실행 중! http://localhost:${port}`);
+  console.log(`✅ Tummur 백엔드 서버 실행 중! http://localhost:${port}`);
 });
 // ------------------------------------------------------------
 // 특정 날짜의 할 일 목록 조회 API
