@@ -1,20 +1,14 @@
 import { updateDateTime } from "../commons/time.js";
 import { applyTheme, toggleTheme } from "../commons/theme.js";
 import "./shortcuts.js";
-import {
-  loadMurmur,
-  saveMurmur,
-  activeDeleteMode,
-} from "./commands.js";
+import { loadMurmur, saveMurmur, activeDeleteMode } from "./commands.js";
 
 // 1초마다 갱신
 setInterval(updateDateTime, 1000);
 // 초기 실행
 updateDateTime();
 
-document
-.getElementById("settingButton")
-.addEventListener("click", toggleTheme);
+document.getElementById("settingButton").addEventListener("click", toggleTheme);
 
 applyTheme();
 
@@ -35,6 +29,11 @@ input.addEventListener("keydown", (e) => {
   debounceTimer = setTimeout(() => {
     console.log("Auto-saving draft..."); // ✅ 연속 입력 방지 (자동 저장 기능 추가 가능)
   }, 500);
+});
+input.addEventListener("focus", (e) => {
+  // alert(e.key)
+  console.log(e)
+  e.preventDefault();
 });
 
 loadMurmur();

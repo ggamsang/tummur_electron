@@ -33,5 +33,8 @@ document.addEventListener("keydown", (event) => {
 
   if (["INPUT", "TEXTAREA"].includes(activeElement.tagName)) return;
 
-  keyActions[key]?.();
+  if(keyActions[key]){
+    event.preventDefault();
+    keyActions[key]();
+  }
 });
