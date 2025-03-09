@@ -1,5 +1,5 @@
 {
-  "name": "Tummur",
+  "name": "tummur",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -9,30 +9,34 @@
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "com.example.myapp",
+    "appId": "com.example.turmur",
     "mac": {
       "target": [
-        "dmg",
-        "zip"
-      ]
-    }
+        "dmg"
+      ],
+      "icon": "assets/IconTemplate.icns"
+    },
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets/"
+      }
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "axios": "^1.7.9",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "express": "^4.18.2",
     "luxon": "^3.5.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "electron": "^34.2.0",
-    "electron-builder": "^25.1.8",
-    "electron-reload": "^2.0.0-alpha.1"
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "electron-reload": "^2.0.0-alpha.1",
+    "sharp": "^0.33.5"
   }
 }
